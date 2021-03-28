@@ -17,6 +17,10 @@ import math
 #import matplotlib as m
 
 
+
+
+
+
 """
 This is the first Function or option
 (3 inputs | 1 output)
@@ -202,7 +206,152 @@ def Mach_a(Mach):
     
     return mu
 
+
+
+
+
+
+
+def TM(g, M, ThetaS):
+    """
+    Solves Taylor-Maccoll Eq
+
+    Parameters
+    ----------
+    g : Float
+        Ratio of Specific Heats
+    M : Float
+        Free-Stream Mach Number
+    ThetaS : Float
+        Shock Wave Angle, in Deg
+
+    Returns
+    -------
+    None.
+
+    """
+
+    #First Solve for the flow deflection angle and M_2 directly behind the shock
+    # Using Oblique Shock Relations 
+    # deflection
+    delta=theta(g,M,ThetaS) #calling function developed in Project 1
+    #M_2
+    M2=mach(g,ThetaS,delta)
+    
+    #Now Grab V' using Mach (Eq 10.16 in book)
+    Vp=1/math.sqrt(1+(2/((g-1)*M2**2)))
+    
+
+    #Now Grab V'_r and V'_theta from geometry (Figure 10.4 in book)
+    Angle=math.radians(ThetaS-delta)
+    Vpr=Vp*math.cos(Angle)
+    Vpt=Vp*math.sin(Angle)
+    
+    #Runge-Kutta time, making a subfunction for this
+    [Theta,Vr,Vt]=TM_RK(g,Vpr,Vpt,ThetaS,0.01) #think 0.01 is a reasonable deltaTheta
+    
+    return Theta,Vr,Vt
+    
+
+
+
+def TM_RK(g,Vpr,Vpt, ThetaS, dTheta):
+    """
+    
+
+    Parameters
+    ----------
+    g : Float
+        Ratio of Specific Heats
+    Vpr : Float
+        Radial velocity just behind shock
+    Vpt : Float
+        Velocity in Angular direction just behind shock
+    ThetaS: Float
+        Shock Angle
+    dTheta: Float
+        Angle increment, in deg, should be positive
+
+
+    Returns
+    -------
+    None.
+
+    """
+    #note that the first equations are solving for Vr and that dr/dtheta=Vtheta
+    
+    maxiter=90/dTheta #this is the number of iteratoins to step from 90 degrees (normal shock) to 0, if no solution is found, you're not going to
+    it=0#initialize iteriation couinter
+    theta=ThetaS #first angle
+    
+    #need a few arrays to return
+    Tarr=[theta]#array of angles
+    Vrarr=[Vpr]#array of radial velocities
+    Vtarr=[Vpt]#array of angular velocities
+    
+    #writing the f_1 and f_2 equations as a subfunction below
+    #angle starts at thetas and then subtracts dtheta
+    
+    #loop time
+    while (it<maxiter & Vpt <0.0): #not sure about the Vpt condition, need further testing 
+        #calculate theta
+        theta=theta-dTheta #working backwards
+        Tarr.append(theta)#add ther angle to the array
+        
+        #RK k values
+        k11=dTheta*Vpt
+        k12=dTheta*f2(g,theta,Vpr,Vpt)
+        k21=dTheta*(Vpt+(k12/2))
+        k22=dTheta*f2(g,theta+(dTheta/2),Vpr+(k11/2),Vpt+(k12/2))
+        k31=dTheta*(Vpt*(k22/2))
+        k32=dTheta*f2(g,theta+(dTheta/2),Vpr+(k21/2),Vpt+(k22/2))
+        k41=dTheta*(Vpt*(k32/2))
+        k42=dTheta*f2(g,theta+(dTheta/2),Vpr+(k31/2),Vpt+(k32/2))
+        
+        #find the addition to the velocities
+        changeR=(k11+2*k21+2*k31+k41)/6
+        changeT=(k12+2*k22+2*k32+k42)/6
+        
+        #add the addition
+        Vpr=Vpr+changeR
+        Vpt=Vpt+changeT
+        
+        #store in array
+        Vrarr.append(Vpr)
+        Vtarr.append(Vpt)
+        
+        it+=1#count iteration
+    return Tarr,Vrarr,Vtarr 
+
+def f2(g, theta,Vr,Vt):
+    """
+    
+
+    Parameters
+    ----------
+    g : Float
+        Ratio of Specific Heats
+    theta : Float
+        Angle, in deg 
+    Vr : Float
+        Radial Velocity
+    Vt : Float
+        Angular velocity
+
+    Returns
+    -------
+    f2, derivative of the angular velocity wrt angle.  
+
+    """
+    num=-(((g-1)/2)*(1-Vr**2-Vt**2)*(2*Vr+(Vt/math.tan(math.radians(theta)))))+(Vt**2*Vr)
+    denom=(((g-1)/2)*(1-Vr**2-Vt**2))-Vt**2
+    f2=num/denom
+    return f2
+    
+    
+    
 """
+
 This section is about graphing
 --------------------------------
 
