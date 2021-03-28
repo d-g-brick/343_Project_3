@@ -14,8 +14,14 @@ Project 1
 
 #import here
 import math
-import matplotlib as m
+#import matplotlib as m
 
+
+"""
+This is the first Function or option
+(3 inputs | 1 output)
+------------------------------------------------------------------------
+"""
 def mach(gamma, Beta, Theta):
     
     B = math.radians(Beta)
@@ -27,6 +33,11 @@ def mach(gamma, Beta, Theta):
     return RMach
 
 
+"""
+This is the second Function or option
+(3 inputs | 1 output)
+------------------------------------------------------------------------
+"""
 def theta(gamma, Mach, Beta):
     
     g = gamma
@@ -60,6 +71,11 @@ def theta(gamma, Mach, Beta):
     #this was verified using a Ti-84 to output the correct answer, but many want to change output decimal precision
 
 
+"""
+This is the third Function or option
+(3 inputs | 1 output)
+------------------------------------------------------------------------
+"""
 def beta(gamma, Mach, Theta):
     
     
@@ -124,6 +140,12 @@ def beta(gamma, Mach, Theta):
    
     return RBeta
 
+
+"""
+This is a sub function of function 3
+(2 inputs | 1 output)
+---------------------------
+"""
 def M_Beta(g,M):
     #print("veriables")
     #print(g)
@@ -138,6 +160,11 @@ def M_Beta(g,M):
     return BM
 
 
+"""
+This is a sub function of function 3
+(3 inputs | 1 output)
+---------------------------
+"""
 def M_Theta(gamma, Mach, Beta):
 
     #print("Varribles")
@@ -160,6 +187,11 @@ def M_Theta(gamma, Mach, Beta):
     return TM
 
 
+"""
+This is a sub function of function 3
+(1 inputs | 1 output)
+---------------------------
+"""
 def Mach_a(Mach):
     
     M = Mach
@@ -170,6 +202,9 @@ def Mach_a(Mach):
     
     return mu
 
+"""
+This section is about graphing
+--------------------------------
 
 def Cp(M,g):
     for i in range(0,len(M)):
@@ -194,16 +229,31 @@ def Cp(M,g):
     m.pyplot.ylabel('Pressure Coefficient')
     m.pyplot.figlegend(loc='best')
     return 
+"""
 
 
-#Main Code area
 
+"""
+                        Main Code area
+                        This is the start of the main code
+"""
+
+"""
+                        This matrix is the options or function dictionary
+                        Left side are the keys that gets printed to the user
+                        The right is the fuction to be called when the user matches with
+"""
 functionMatrix = {
   "Mach":mach,
   "Theta":theta,
   "Beta":beta ,
 }
 
+"""
+                        This matrix is a dictionary of the  varriables required in each function choice
+                        The left side is the keys that match with the fuction
+                        The right side are arrays/matrix that hold the varribles (order matters | list = fuction order)
+"""
 lst = {
     "Mach":["gamma", "Beta(°)", "Theta(°)"],
        "Theta":["gamma", "Mach", "Beta(°)"],
@@ -211,20 +261,39 @@ lst = {
     }
 
 ver = []
+results = []
 
-print("Available Functions:")
-for function in functionMatrix.keys():
-  print(function)
+"""
+                        This print fuction prompts the user with the avalible functions
+"""
+print("Available Functions:")           # Header
+for function in functionMatrix.keys():  # basically a for loop that uses creates varrible called functions that it stores the current key in
+  print(function)                       # Prints the keys while the for loop runs
 
-chosen = str(input("Which Function Would You Like to run? "))
-print(chosen)
+"""
+                        Ask the user to choose what they would like to do
+"""
+chosen = str(input("Which Function Would You Like to run? "))   #Prompts for the users input and stores it
+print(chosen)                                                   #Shows the user whick option they choose
 
-variableList = lst[chosen]
-for var in variableList:
-    ele = float(input(f"Please input {var}: "))
-    ver.append(ele)
+"""
+                        Uses the users choice to prompt them with which varribles are required
+"""
+variableList = lst[chosen]                          #Based on the users choice it matches it with the lst dictionary key and stores the
+                                                    # specific sub matrix in its own new list/matrix
+for var in variableList:                            #Creates a for loop that runs for the number of varribles in the VariableList matrix
+                                                    # for every instance it saves the current varrible as var that iteration of the loop
+    ele = float(input(f"Please input {var}: "))     # prompts the user for the numeric value of specific variables 
+    ver.append(ele)                                 # This line saves the  value the value the user entered and appends it to a 
+                                                    # an empty list in the order they are asked in the function
 
-results = functionMatrix[chosen](*ver)
+""" This is where the magic happens"""
+results = functionMatrix[chosen](*ver)      # This line runes the function chosen by the user with the variables required by the function
+a = results                                        
+                   
+"""
+Should be needed if the fuction needs to output to variables will work on it a different way
+-----
 
 if isinstance(results, list):
     a = results[0]
@@ -234,7 +303,13 @@ if isinstance(results, list):
 else:
     a = results
     # 1 value returend
+"""
 
+"""
+                                        Here we are printing out the results to the user
+                                        We started with the specific information to each seaction
+                                        Then the common information is done last
+"""
 if chosen == "Mach":
     print("**************Results**************\n\n")
     print("----- Given -----")
@@ -271,12 +346,14 @@ if chosen == "Beta":
     print("")
     print("----- Results -----")
     print("# of Iterations to Convergence", b[1])
-    print("Shock Angle", round(b[0],4))
+    print("Shock Angle", round(a,4))
     
     gamma = ver[0]
     M = ver[1]
     theta = ver[2]
-    Beta = b[0]
+    Beta = a[0]
+    
+    
     
 Mn1=M*math.sin(math.radians(Beta))
 Mn2=((Mn1**2+(2/(gamma-1)))/((2*gamma/(gamma-1)*Mn1**2)-1))**0.5
@@ -290,6 +367,8 @@ print("M2: ", round(M2,4))
 print("P2/P1: ", round(Pressure_Ratio,4))
 print("T2/T1: ",round(Temperature_ratio,4))
 
+
+
 """
 Mn1=M*math.sin(math.radians(Beta))
 Mn2=((Mn1**2+(2/(gamma-1)))/((2*gamma/(gamma-1)*Mn1**2)-1))**0.5
@@ -299,4 +378,4 @@ Density_Ratio=((gamma+1)*Mn1**2)/((gamma-1)*Mn1**2+2)
 Temperature_ratio=Pressure_Ratio/Density_Ratio
 """
 
-'Matt is Awesome'
+#Matt is Awesome
