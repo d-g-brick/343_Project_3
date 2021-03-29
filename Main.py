@@ -229,7 +229,8 @@ def TM_Shock(g,M,ThetaC):
     """
     
     #First define the function we're trying to find the zero of
-    f= lambda C: C-ThetaC #want the 
+    f= lambda C: C-ThetaC #want the determined cone angle to be the real cone angle
+    
     
     #define the bounds
     p0=ThetaC#has to be bigger than the cone
