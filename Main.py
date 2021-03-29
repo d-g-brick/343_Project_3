@@ -397,6 +397,10 @@ print("Density: ", round(Dr, 4))
 print(" --- Conditions at the surface of the Cone ---")
 
 if chosen == "1":
+    a = results[0]
+    b = results[1]
+    c = results[2]
+    
     for i in range(0, results[5]+1):
         
         Varrrr = math.sqrt(((b[i])**2) + ((c[i])**2))
@@ -426,10 +430,6 @@ if chosen == "1":
 
 
 print("\n --- Final Conditions ---")
-if chosen == "1":
-    a = results[0]
-    b = results[1]
-    c = results[2]
     
     print("Shock Angle: ", a[0])
     print("Cone Angle: ", round(a[-1], 4))
