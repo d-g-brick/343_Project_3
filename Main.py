@@ -376,7 +376,6 @@ if chosen == "2":
     M2 = cheese[4]
     Mn1 = cheese[3]
     
-    
 Pr=1+(Mn1**2-1)*(2*ver[0]/(ver[0]+1))
 Dr=((ver[0]+1)*Mn1**2)/((ver[0]-1)*Mn1**2+2)
 Tr=Pr/Dr
@@ -387,12 +386,22 @@ print("Pressure: ", round(Pr, 4))
 print("Temp: ", round(Tr, 4))
 print("Density: ", round(Dr, 4))
 
+
 print("\n --- Final Conditions ---")
-print("Shock Angle: ", )
-print("Cone Angle: ", )
-print("V_r: ", )
-print("V_Theta: ", )
-print("V: " )
+if chosen == "1":
+    a = results[0]
+    b = results[1]
+    c = results[2]
+    
+    print("Shock Angle: ", a[0])
+    print("Cone Angle: ", round(a[-1], 4))
+    print("V_r: ", round(b[-1], 4))
+    print("V_Theta: ", round(c[-1], 4))
+    
+    V = math.sqrt(((a[-1])**2) + ((b[-1])**2))
+    
+    print("V': ", round(V, 4))
+
 
 print("\n")
 print("Iterations to answer: ", )
