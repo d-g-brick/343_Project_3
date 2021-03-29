@@ -303,6 +303,7 @@ Left side are the keys that gets printed to the user"""
 chosen = 0
 ver = []
 results = []
+cheese =[]
 
 functionMatrix = {
   "(1) Cone Angle":TM,
@@ -370,15 +371,21 @@ if chosen == "1":
     M2 = results[4]
     Mn1 = results[3]
     
+if chosen == "2":
+    cheese = TM(ver[0], ver[1], results, ver[3])
+    M2 = cheese[4]
+    Mn1 = cheese[3]
+    
+    
 Pr=1+(Mn1**2-1)*(2*ver[0]/(ver[0]+1))
-Dr=((ver[0]+1)*ver[0]**2)/((ver[0]-1)*Mn1**2+2)
+Dr=((ver[0]+1)*Mn1**2)/((ver[0]-1)*Mn1**2+2)
 Tr=Pr/Dr
 
 print("\n --- Conditions behind shock --- ")
-print("Pressure: ", Pr)
-print("Temp: ", Tr)
-print("Density: ", Dr)
-print("Mach: ", M2)
+print("Mach: ", round(M2, 4))
+print("Pressure: ", round(Pr, 4))
+print("Temp: ", round(Tr, 4))
+print("Density: ", round(Dr, 4))
 
 print("\n --- Final Conditions ---")
 print("Shock Angle: ", )
