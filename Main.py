@@ -394,7 +394,7 @@ print("Temp: ", round(Tr, 4))
 print("Density: ", round(Dr, 4))
 
 
-print(" --- Conditions at the surface of the Cone ---")
+print("\n --- Conditions at the surface of the Cone ---")
 
 if chosen == "1":
     a = results[0]
@@ -419,17 +419,17 @@ if chosen == "1":
         Dg.append(D)
         Tg.append(T)
         
-        print("Pressure: ", round(Pg[-1], 4))
-        print("Temp: ", round(Tg[-1], 4))
-        print("Density: ", round(Dg[-1], 4))
+    print("Pressure: ", round(Pg[-1], 4))
+    print("Temp: ", round(Tg[-1], 4))
+    print("Density: ", round(Dg[-1], 4))
         
-        print("Pressure: ", round(Pg[-1]*Pr, 4))
-        print("Temp: ", round(Tg[-1]*Tr, 4))
-        print("Density: ", round(Dg[-1]*Dr, 4))
+    print("Pressure: ", round(Pg[-1]*Pr, 4))
+    print("Temp: ", round(Tg[-1]*Tr, 4))
+    print("Density: ", round(Dg[-1]*Dr, 4))
         
 
 
-print("\n --- Final Conditions ---")
+    print("\n --- Final Conditions ---")
     
     print("Shock Angle: ", a[0])
     print("Cone Angle: ", round(a[-1], 4))
