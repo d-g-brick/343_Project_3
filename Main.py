@@ -61,7 +61,7 @@ def theta(gamma, Mach, Beta):
 
 
 
-def TM(g, M, ThetaS):
+def TM(g, M, ThetaS, dTheta):
     """
     Solves Taylor-Maccoll Eq for Cone angle given shock angle and Mach
 
@@ -100,7 +100,7 @@ def TM(g, M, ThetaS):
     
     
     #Runge-Kutta time, making a subfunction for this
-    [Theta,Vr,Vt]=TM_RK(g,Vpr,Vpt,ThetaS,-0.01) #think 0.01 is a reasonable deltaTheta
+    [Theta,Vr,Vt]=TM_RK(g,Vpr,Vpt,ThetaS,dTheta) #think 0.01 is a reasonable deltaTheta
     
     return Theta,Vr,Vt
     
