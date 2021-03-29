@@ -419,3 +419,41 @@ if chosen == "2":
     print("V': ", round(V, 4))
 
     print("Iterations to answer: ", results[1])
+    
+    
+    
+"""
+                =-=-=-=-=-=-=-=-=-=-=-=-=
+                =-=-= Graph section =-=-=
+                =-=-=-=-=-=-=-=-=-=-=-=-=
+"""
+
+
+if chosen == "1":
+    
+    # importing the required module
+    import matplotlib.pyplot as plt
+    
+    fig = plt.figure()
+    
+    # x axis values
+    x = results[0]
+    # corresponding y axis values
+    y = results[2]
+      
+    # plotting the points 
+    plt.plot(x, y)
+      
+    # naming the x axis
+    plt.xlabel('Theta')
+    # naming the y axis
+    plt.ylabel('V_Theta')
+    
+    plt.axis([max(x),min(x),min(y),max(y)])
+      
+    # function to show the plot
+    fig.savefig("V_ThetaVsTheta.png", bbox_inches="tight", dpi=100)
+
+    
+    
+    
