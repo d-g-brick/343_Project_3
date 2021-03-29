@@ -229,7 +229,7 @@ def TM_Shock(g,M,ThetaC,dtheta):
     """
     dt = dtheta    
     #First define the function we're trying to find the zero of
-    f= lambda SG: TM(g,M,SG)[0][-1]-ThetaC #want the determined cone angle to be the real cone angle, the indexing should grab the last element of the angles, ie: the calculated cone angle
+    f= lambda SG: TM(g,M,SG,dt)[0][-1]-ThetaC #want the determined cone angle to be the real cone angle, the indexing should grab the last element of the angles, ie: the calculated cone angle
     
     
     #define the bounds
@@ -409,7 +409,7 @@ if chosen == "2":
     b = cheese[1]
     c = cheese[2]
     
-    print("Shock Angle: ", results[0])
+    print("Shock Angle: ", round(results[0], 4))
     print("Cone Angle: ", ver[2])
     print("V_r: ", round(b[-1], 4))
     print("V_Theta: ", round(c[-1], 4))
