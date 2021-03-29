@@ -208,7 +208,7 @@ def f2(g, theta,Vr,Vt):
     return f2
     
 
-def TM_Shock(g,M,ThetaC):
+def TM_Shock(g,M,ThetaC,dtheta):
     """
     Solves Taylor-Maccoll Equation for shock angle given Mach and Cone angle
     
@@ -227,7 +227,7 @@ def TM_Shock(g,M,ThetaC):
     Shock angle
 
     """
-    
+    dt = dtheta    
     #First define the function we're trying to find the zero of
     f= lambda SG: TM(g,M,SG)[0][-1]-ThetaC #want the determined cone angle to be the real cone angle, the indexing should grab the last element of the angles, ie: the calculated cone angle
     
@@ -238,7 +238,7 @@ def TM_Shock(g,M,ThetaC):
     
     
     for n in range(1, 100):
-        print(n)
+        
         q0=f(p0)
         q1=f(p1)
         p= p1 - q1*((p1 - p0)/(q1-q0))
@@ -247,11 +247,12 @@ def TM_Shock(g,M,ThetaC):
             
             ThetaS=p
             break
-
+        elif n > 99:
+            print("failure")
         else:
             p0=p1
             p1=p
-    return ThetaS
+    return ThetaS,n,dtheta
     
     
     
@@ -371,7 +372,7 @@ if chosen == "1":
     Mn1 = results[3]
     
 if chosen == "2":
-    cheese = TM(ver[0], ver[1], results, ver[3])
+    cheese = TM(ver[0], ver[1], results[0], ver[3])
     M2 = cheese[4]
     Mn1 = cheese[3]
     
@@ -402,3 +403,19 @@ if chosen == "1":
     print("V': ", round(V, 4))
 
     print("Iterations to answer: ", results[5])
+    
+if chosen == "2":
+    a = cheese[0]
+    b = cheese[1]
+    c = cheese[2]
+    
+    print("Shock Angle: ", results[0])
+    print("Cone Angle: ", ver[2])
+    print("V_r: ", round(b[-1], 4))
+    print("V_Theta: ", round(c[-1], 4))
+    
+    V = math.sqrt(((b[-1])**2) + ((c[-1])**2))
+    
+    print("V': ", round(V, 4))
+
+    print("Iterations to answer: ", results[1])
