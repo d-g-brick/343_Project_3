@@ -100,9 +100,9 @@ def TM(g, M, ThetaS, dTheta):
     
     
     #Runge-Kutta time, making a subfunction for this
-    [Theta,Vr,Vt]=TM_RK(g,Vpr,Vpt,ThetaS,dTheta) #think 0.01 is a reasonable deltaTheta
+    [Theta,Vr,Vt,it]=TM_RK(g,Vpr,Vpt,ThetaS,dTheta) #think 0.01 is a reasonable deltaTheta
     
-    return Theta,Vr,Vt,Mn1,M2
+    return Theta,Vr,Vt,Mn1,M2,it
     
 
 
@@ -179,7 +179,8 @@ def TM_RK(g,Vpr,Vpt, ThetaS, dTheta):
         
         
         it+=1#count iteration
-    return Tarr,Vrarr,Vtarr 
+        
+    return Tarr,Vrarr,Vtarr,it
 
 def f2(g, theta,Vr,Vt):
     """
@@ -247,8 +248,6 @@ def TM_Shock(g,M,ThetaC):
             ThetaS=p
             break
 
-        elif n==99:
-            print('failed')
         else:
             p0=p1
             p1=p
@@ -398,10 +397,8 @@ if chosen == "1":
     print("V_r: ", round(b[-1], 4))
     print("V_Theta: ", round(c[-1], 4))
     
-    V = math.sqrt(((a[-1])**2) + ((b[-1])**2))
+    V = math.sqrt(((b[-1])**2) + ((c[-1])**2))
     
     print("V': ", round(V, 4))
 
-
-print("\n")
-print("Iterations to answer: ", )
+    print("Iterations to answer: ", results[5])
