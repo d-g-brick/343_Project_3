@@ -372,9 +372,11 @@ if chosen == "2":
     print("Cone Angle: ",ver[2])
 print("dtheta: ", ver[3])
 
+
 if chosen == "1":
     M2 = results[4]
     Mn1 = results[3]
+    
     
 if chosen == "2":
     cheese = TM(ver[0], ver[1], results[0], ver[3])
@@ -390,6 +392,37 @@ print("Mach: ", round(M2, 4))
 print("Pressure: ", round(Pr, 4))
 print("Temp: ", round(Tr, 4))
 print("Density: ", round(Dr, 4))
+
+
+print(" --- Conditions at the surface of the Cone ---")
+
+if chosen == "1":
+    for i in range(0, results[5]+1):
+        
+        Varrrr = math.sqrt(((b[i])**2) + ((c[i])**2))
+        Vp.append(Varrrr)
+        
+    for j in Vp:
+        Store = math.sqrt(2/(((1/(j)**2)-1)*(ver[0]-1)))
+        Mach_g.append(Store)
+        
+    for k in Mach_g:    
+        P=1+(k**2-1)*(2*ver[0]/(ver[0]+1))
+        D=((ver[0]+1)*k**2)/((ver[0]-1)*k**2+2)
+        T=P/D
+        
+        Pg.append(P)
+        Dg.append(D)
+        Tg.append(T)
+        
+        print("Pressure: ", round(Pg[-1], 4))
+        print("Temp: ", round(Tg[-1], 4))
+        print("Density: ", round(Dg[-1], 4))
+        
+        print("Pressure: ", round(Pg[-1]*Pr, 4))
+        print("Temp: ", round(Tg[-1]*Tr, 4))
+        print("Density: ", round(Dg[-1]*Dr, 4))
+        
 
 
 print("\n --- Final Conditions ---")
@@ -458,25 +491,6 @@ if chosen == "1":
     
     # function to show the plot
     fig.savefig("V_ThetaVsTheta.png", bbox_inches="tight", dpi=100)
-     
-    for i in range(0, results[5]+1):
-        
-        Varrrr = math.sqrt(((b[i])**2) + ((c[i])**2))
-        Vp.append(Varrrr)
-        
-    for j in Vp:
-        Store = math.sqrt(2/(((1/(j)**2)-1)*(ver[0]-1)))
-        Mach_g.append(Store)
-        
-    for k in Mach_g:    
-        P=1+(k**2-1)*(2*ver[0]/(ver[0]+1))
-        D=((ver[0]+1)*k**2)/((ver[0]-1)*k**2+2)
-        T=P/D
-        
-        Pg.append(P)
-        Dg.append(D)
-        Tg.append(T)
-        
     
     fig = plt.figure()
     
@@ -537,4 +551,5 @@ if chosen == "1":
     plt.axis([max(x),min(x),min(y),max(y)])
       
     fig.savefig("TempVsTheta.png", bbox_inches="tight", dpi=100)
+    
     
