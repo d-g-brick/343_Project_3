@@ -371,7 +371,7 @@ print("temp: ", )
 print("density: ", )
 print("mach: ", )
 
-print("\n --- Final Contisions ---")
+print("\n --- Final Conditions ---")
 print("Shock Angle: ", )
 print("Cone Angle: ", )
 print("V_r: ", )
