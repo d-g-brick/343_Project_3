@@ -297,8 +297,8 @@ def Cp(M,g):
                         =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 """
 
-                        """This matrix is the options or function dictionary
-                        Left side are the keys that gets printed to the user"""
+"""This matrix is the options or function dictionary
+Left side are the keys that gets printed to the user"""
 
 chosen = 0
 ver = []
@@ -320,14 +320,14 @@ lst = {
 }
 
 
-                        """This print fuction prompts the user with the avalible functions"""
+"""This print fuction prompts the user with the avalible functions"""
 
 print("Available Functions:")           # Header
 for function in functionMatrix.keys():  # basically a for loop that uses creates varrible called functions that it stores the current key in
   print(function)                       # Prints the keys while the for loop runs
 
 
-                        """Ask the user to choose what they would like to do"""
+"""Ask the user to choose what they would like to do"""
 
 chosen = str(input("Which Function Would You Like to run? "))   #Prompts for the users input and stores it
 print(chosen)                                                   #Shows the user whick option they choose
@@ -340,7 +340,7 @@ if chosen == 2:
     func = "TM_shock"
     
     
-                        """Uses the users choice to prompt them with which varribles are required"""
+"""Uses the users choice to prompt them with which varribles are required"""
 
 variableList = lst[chosen]                          #Based on the users choice it matches it with the lst dictionary key and stores the
                                                     # specific sub matrix in its own new list/matrix
@@ -350,14 +350,14 @@ for var in variableList:                            #Creates a for loop that run
     ver.append(ele)                                 # This line saves the  value the value the user entered and appends it to a 
                                                     # an empty list in the order they are asked in the function
 
-                        """ This is where the magic happens"""
+""" This is where the magic happens"""
 results = functionMatrix[func](*ver)      # This line runes the function chosen by the user with the variables required by the function
 a = results
                    
 
-                                       """Here we are printing out the results to the user
-                                        We started with the specific information to each seaction
-                                        Then the common information is done last"""
+"""Here we are printing out the results to the user
+We started with the specific information to each seaction
+Then the common information is done last"""
 
 print("\n --- Inital Contions --- ")
 print("Gamma: ", )
