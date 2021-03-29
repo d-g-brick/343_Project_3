@@ -233,7 +233,7 @@ def TM_Shock(g,M,ThetaC):
     
     #define the bounds
     p0=ThetaC#can't be smaller than the cone
-    p1=70#can't get past a normal shock, might want to reduce so no strong
+    p1=75 #from PLot in Lecture 16, eye ball for a reasonable threshold. Note that this won't work for M<1.1 
     
     
     for n in range(1, 100):
@@ -242,7 +242,7 @@ def TM_Shock(g,M,ThetaC):
         q1=f(p1)
         p= p1 - q1*((p1 - p0)/(q1-q0))
         
-        if abs(p-p1)<0.0001:
+        if abs(p-p1)<1e-6:
             
             ThetaS=p
             break
