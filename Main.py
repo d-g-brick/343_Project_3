@@ -237,6 +237,7 @@ def TM_Shock(g,M,ThetaC):
     
     
     
+    
 """
 
 This section is about graphing
