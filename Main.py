@@ -292,19 +292,21 @@ def Cp(M,g):
 
 
 """
-                        Main Code area
-                        This is the start of the main code
+                        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                        =-=-=-=-=-=  Main Code  =-=-=-=-=-=
+                        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 """
 
-"""
-                        This matrix is the options or function dictionary
-                        Left side are the keys that gets printed to the user
-                        The right is the fuction to be called when the user matches with
-"""
+                        """This matrix is the options or function dictionary
+                        Left side are the keys that gets printed to the user"""
+
+chosen = 0
+ver = []
+results = []
+
 functionMatrix = {
-  "Mach":mach,
-  "Theta":theta,
-  "Beta":beta ,
+  "(1) Cone Angle":1,
+  "(2) Shock Angle":2
 }
 
 """
@@ -313,30 +315,33 @@ functionMatrix = {
                         The right side are arrays/matrix that hold the varribles (order matters | list = fuction order)
 """
 lst = {
-    "Mach":["gamma", "Beta(°)", "Theta(°)"],
-       "Theta":["gamma", "Mach", "Beta(°)"],
-       "Beta":["gamma", "Mach", "theta(°)"]
-    }
+    "1":["gamma", "Mach", "Shock Angle"],
+    "2":["gamma", "Mach", "Cone Angle"]
+}
 
-ver = []
-results = []
 
-"""
-                        This print fuction prompts the user with the avalible functions
-"""
+                        """This print fuction prompts the user with the avalible functions"""
+
 print("Available Functions:")           # Header
 for function in functionMatrix.keys():  # basically a for loop that uses creates varrible called functions that it stores the current key in
   print(function)                       # Prints the keys while the for loop runs
 
-"""
-                        Ask the user to choose what they would like to do
-"""
+
+                        """Ask the user to choose what they would like to do"""
+
 chosen = str(input("Which Function Would You Like to run? "))   #Prompts for the users input and stores it
 print(chosen)                                                   #Shows the user whick option they choose
 
-"""
-                        Uses the users choice to prompt them with which varribles are required
-"""
+
+if chosen == 1:
+    func = "TM"
+    
+if chosen == 2:
+    func = "TM_shock"
+    
+    
+                        """Uses the users choice to prompt them with which varribles are required"""
+
 variableList = lst[chosen]                          #Based on the users choice it matches it with the lst dictionary key and stores the
                                                     # specific sub matrix in its own new list/matrix
 for var in variableList:                            #Creates a for loop that runs for the number of varribles in the VariableList matrix
@@ -345,95 +350,35 @@ for var in variableList:                            #Creates a for loop that run
     ver.append(ele)                                 # This line saves the  value the value the user entered and appends it to a 
                                                     # an empty list in the order they are asked in the function
 
-""" This is where the magic happens"""
-results = functionMatrix[chosen](*ver)      # This line runes the function chosen by the user with the variables required by the function
-a = results                                        
+                        """ This is where the magic happens"""
+results = functionMatrix[func](*ver)      # This line runes the function chosen by the user with the variables required by the function
+a = results
                    
-"""
-Should be needed if the fuction needs to output to variables will work on it a different way
------
 
-if isinstance(results, list):
-    a = results[0]
-    b = results[1]
-
-    # list returned
-else:
-    a = results
-    # 1 value returend
-"""
-
-"""
-                                        Here we are printing out the results to the user
+                                       """Here we are printing out the results to the user
                                         We started with the specific information to each seaction
-                                        Then the common information is done last
-"""
-if chosen == "Mach":
-    print("**************Results**************\n\n")
-    print("----- Given -----")
-    print("Shock Angle: ", ver[1])
-    print("Flow Deflection angle: ", ver[2])
-    print("")
-    print("----- Results -----")
-    print("Mach Number: ", round(a,4))
+                                        Then the common information is done last"""
 
-    gamma = ver[0]
-    M = a
-    theta = ver[2]
-    Beta = ver[1]
+print("\n --- Inital Contions --- ")
+print("Gamma: ", )
+if chosen == 1:
+    print("Shock: ", )
+if chosen == 2:
+    print("Cone Angle: ", )
+print("dtheta: ", )
 
-if chosen == "Theta":
-    print("**************Results**************\n\n")
-    print("----- Given -----")
-    print("Mach Number: ", ver[1])
-    print("Shock Angle: ", ver[2])
-    print("")
-    print("----- Results -----")
-    print("Flow Deflection angle: ", round(a,4))
+print("\n --- Conditions behind shock --- ")
+print("pressure", )
+print("temp", )
+print("density", )
+print("mach", )
 
-    gamma = ver[0]
-    M = ver[1]
-    theta = a
-    Beta = ver[2]
-    
-if chosen == "Beta":
-    print("**************Results**************\n\n")
-    print("----- Given -----")
-    print("Mach Number: ", ver[1])
-    print("Flow Deflection angle: ", ver[2])
-    print("")
-    print("----- Results -----")
-    print("# of Iterations to Convergence", a[1])
-    print("Shock Angle", round(a,4))
-    
-    gamma = ver[0]
-    M = ver[1]
-    theta = ver[2]
-    Beta = a[0]
-    
-    
-    
-Mn1=M*math.sin(math.radians(Beta))
-Mn2=((Mn1**2+(2/(gamma-1)))/((2*gamma/(gamma-1)*Mn1**2)-1))**0.5
-M2=Mn2/(math.sin(math.radians(Beta-theta)))
-Pressure_Ratio=1+(Mn1**2-1)*(2*gamma/(gamma+1))
-Density_Ratio=((gamma+1)*Mn1**2)/((gamma-1)*Mn1**2+2)
-Temperature_ratio=Pressure_Ratio/Density_Ratio
-print("M1 normal: ", round(Mn1,4))
-print("M2 normal: ", round(Mn2,4))
-print("M2: ", round(M2,4))
-print("P2/P1: ", round(Pressure_Ratio,4))
-print("T2/T1: ",round(Temperature_ratio,4))
+print("\n --- Final Contisions ---")
+print("Shock Angle: ", )
+print("Cone Angle: ", )
+print("V_r: ", )
+print("V_Theta: ", )
+print("V: " )
 
-
-
-"""
-Mn1=M*math.sin(math.radians(Beta))
-Mn2=((Mn1**2+(2/(gamma-1)))/((2*gamma/(gamma-1)*Mn1**2)-1))**0.5
-M2=Mn2/(math.sin(math.radians(Beta-Theta)))
-Pressure_Ratio=1+(Mn1**2-1)*(2*gamma/(gamma+1))
-Density_Ratio=((gamma+1)*Mn1**2)/((gamma-1)*Mn1**2+2)
-Temperature_ratio=Pressure_Ratio/Density_Ratio
-"""
-
-#Matt is Awesome
+print("\n")
+print("Iterations to answer: ", )
