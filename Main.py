@@ -227,7 +227,11 @@ def TM_Shock(g,M,ThetaC):
     Shock angle
 
     """
-    #First define the bounds
+    
+    #First define the function we're trying to find the zero of
+    f= lambda C: C-ThetaC #want the 
+    
+    #define the bounds
     p0=ThetaC#has to be bigger than the cone
     p1=90#can't get past a normal shock, might want to reduce so no strong
     
