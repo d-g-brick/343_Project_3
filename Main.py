@@ -63,7 +63,7 @@ def theta(gamma, Mach, Beta):
 
 def TM(g, M, ThetaS):
     """
-    Solves Taylor-Maccoll Eq
+    Solves Taylor-Maccoll Eq for Cone angle given shock angle and Mach
 
     Parameters
     ----------
@@ -208,8 +208,33 @@ def f2(g, theta,Vr,Vt):
     return f2
     
 
+def TM_Shock(g,M,ThetaC):
+    """
+    Solves Taylor-Maccoll Equation for shock angle given Mach and Cone angle
+    
 
+    Parameters
+    ----------
+    g : Float
+        Ratio of Specific Heats
+    M : float
+        Mach number
+    ThetaC : float
+        cone anlge, in Deg
 
+    Returns
+    -------
+    Shock angle
+
+    """
+    #First define the bounds
+    p0=ThetaC#has to be bigger than the cone
+    p1=90#can't get 
+    
+    
+    
+    
+    
 """
 
 This section is about graphing
