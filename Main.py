@@ -305,8 +305,8 @@ ver = []
 results = []
 
 functionMatrix = {
-  "(1) Cone Angle":1,
-  "(2) Shock Angle":2
+  "(1) Cone Angle":TM,
+  "(2) Shock Angle":TM_Shock
 }
 
 """
@@ -329,17 +329,16 @@ for function in functionMatrix.keys():  # basically a for loop that uses creates
 
 """Ask the user to choose what they would like to do"""
 
-chosen = str(input("Which Function Would You Like to run? "))   #Prompts for the users input and stores it
-print(chosen)                                                   #Shows the user whick option they choose
+chosen = input("Which Function Would You Like to run? ")   #Prompts for the users input and stores it
 
+if chosen == "1":
+    func = "(1) Cone Angle"
+    print("Chosen: Cone Angle")
+    
+if chosen == "2":
+    func = "(2) Shock Angle"
+    print("Chosen: Shock Angle")
 
-if chosen == 1:
-    func = "TM"
-    
-if chosen == 2:
-    func = "TM_shock"
-    
-    
 """Uses the users choice to prompt them with which varribles are required"""
 
 variableList = lst[chosen]                          #Based on the users choice it matches it with the lst dictionary key and stores the
@@ -352,7 +351,6 @@ for var in variableList:                            #Creates a for loop that run
 
 """ This is where the magic happens"""
 results = functionMatrix[func](*ver)      # This line runes the function chosen by the user with the variables required by the function
-a = results
                    
 
 """Here we are printing out the results to the user
@@ -361,17 +359,17 @@ Then the common information is done last"""
 
 print("\n --- Inital Contions --- ")
 print("Gamma: ", )
-if chosen == 1:
+if chosen == "1":
     print("Shock: ", )
-if chosen == 2:
+if chosen == "2":
     print("Cone Angle: ", )
 print("dtheta: ", )
 
 print("\n --- Conditions behind shock --- ")
-print("pressure", )
-print("temp", )
-print("density", )
-print("mach", )
+print("pressure: ", )
+print("temp: ", )
+print("density: ", )
+print("mach: ", )
 
 print("\n --- Final Contisions ---")
 print("Shock Angle: ", )
