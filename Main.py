@@ -238,6 +238,7 @@ def TM_Shock(g,M,ThetaC):
     
     
     for n in range(1, 100):
+        print(n)
         q0=f(p0)
         q1=f(p1)
         p= p1 - q1*((p1 - p0)/(q1-q0))
