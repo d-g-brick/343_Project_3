@@ -269,15 +269,14 @@ def Cp(M,g):
 
 
 """
-                        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-                        =-=-=-=-=-=  Main Code area  =-=-=-=-=-=
+                        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+                        =-=-=-=-=-=  Main Code  =-=-=-=-=-=
+                        =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 """
 
-"""
-                        This matrix is the options or function dictionary
-                        Left side are the keys that gets printed to the user
-                        The right is the fuction to be called when the user matches with
-"""
+                        """This matrix is the options or function dictionary
+                        Left side are the keys that gets printed to the user"""
+
 chosen = 0
 ver = []
 results = []
@@ -328,14 +327,35 @@ for var in variableList:                            #Creates a for loop that run
     ver.append(ele)                                 # This line saves the  value the value the user entered and appends it to a 
                                                     # an empty list in the order they are asked in the function
 
-""" This is where the magic happens"""
+                        """ This is where the magic happens"""
 results = functionMatrix[func](*ver)      # This line runes the function chosen by the user with the variables required by the function
-a = results                                        
+a = results
                    
 
-"""
-                                        Here we are printing out the results to the user
+                                       """Here we are printing out the results to the user
                                         We started with the specific information to each seaction
-                                        Then the common information is done last
-"""
+                                        Then the common information is done last"""
 
+print("\n --- Inital Contions --- ")
+print("Gamma: ", )
+if chosen == 1:
+    print("Shock: ", )
+if chosen == 2:
+    print("Cone Angle: ", )
+print("dtheta: ", )
+
+print("\n --- Conditions behind shock --- ")
+print("pressure", )
+print("temp", )
+print("density", )
+print("mach", )
+
+print("\n --- Final Contisions ---")
+print("Shock Angle: ", )
+print("Cone Angle: ", )
+print("V_r: ", )
+print("V_Theta: ", )
+print("V: " )
+
+print("\n")
+print("Iterations to answer: ", )
