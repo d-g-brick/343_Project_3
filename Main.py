@@ -229,14 +229,30 @@ def TM_Shock(g,M,ThetaC):
     """
     
     #First define the function we're trying to find the zero of
-    f= lambda C: C-ThetaC #want the determined cone angle to be the real cone angle
+    f= lambda SG: TM(g,M,SG)[0][-1]-ThetaC #want the determined cone angle to be the real cone angle, the indexing should grab the last element of the angles, ie: the calculated cone angle
     
     
     #define the bounds
-    p0=ThetaC#has to be bigger than the cone
+    p0=ThetaC#can't be smaller than the cone
     p1=90#can't get past a normal shock, might want to reduce so no strong
     
     
+    for n in range(1, 100):
+        q0=f(p0)
+        q1=f(p1)
+        p= p1 - q1*((p1 - p0)/(q1-q0))
+        
+        if abs(p-p1)<0.0001:
+            
+            ThetaS=p
+            break
+
+        elif n==99:
+            print('failed')
+        else:
+            p0=p1
+            p1=p
+    return ThetaS
     
     
     
