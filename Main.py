@@ -21,27 +21,7 @@ import math
 
 
 
-"""
-This is the first Function or option
-(3 inputs | 1 output)
-------------------------------------------------------------------------
-"""
-def mach(gamma, Beta, Theta):
-    
-    B = math.radians(Beta)
-    T = math.radians(Theta)
-    g = gamma
-    
-    RMach = math.sqrt((-2*math.tan(T)-2*(1/(math.tan(B)))/(g*math.tan(T)+math.tan(T)*math.cos(2*B)-2*math.sin(B)*math.sin(B)*(1/(math.tan(B))))))
-    
-    return RMach
 
-
-"""
-This is the second Function or option
-(3 inputs | 1 output)
-------------------------------------------------------------------------
-"""
 def theta(gamma, Mach, Beta):
     
     g = gamma
@@ -73,140 +53,9 @@ def theta(gamma, Mach, Beta):
     
     return RTheta
     #this was verified using a Ti-84 to output the correct answer, but many want to change output decimal precision
-
-
-"""
-This is the third Function or option
-(3 inputs | 1 output)
-------------------------------------------------------------------------
-"""
-def beta(gamma, Mach, Theta):
     
+
     
-    g = gamma
-    M = Mach
-    T = Theta
-    
-    #using the functions for finding Beta max (the maximum shock angle) supported by the maximum Theta (the maximum flow deflection)
-    f = lambda B: math.atan(2*(1/math.tan(math.radians(B)))*(M**2*(math.sin(math.radians(B)))**2-1)/(M**2*(g+math.cos(math.radians(2*B)))+2))-math.radians(T)
-    
-    g = gamma
-    M = Mach
-    T = Theta
-    
-    RBeta = []
-    
-    BM = M_Beta(g,M)
-    
-    Theta_max = M_Theta(g, M, BM)
-    
-    Mach_angle = Mach_a(M)
-
-        #Strong Root for Beta function
-        #This root will be between 90 and the theta max
-        #F = the function
-        #sA = Theta max
-        #sB = 90
-        #iteration is set automatically to 100
-
-    #setting bounds
-    for c in range(1,3):
-        if c == 1:
-            Old_A = math.degrees(BM) #p0
-            Old_B = float(90) #p1
-            
-        if c == 2:
-            Old_A = Mach_angle
-            Old_B = math.degrees(BM)
-        
-        #verifying
-##        if f(Old_A)*f(Old_B) >= 0:
-##            print("failed verification")
-##            return None
-
-        #iterating to find the solution for beta
-        for n in range(1, 100):
-            
-            new = Old_B - f(Old_B)*(Old_B - Old_A)/(f(Old_B)-f(Old_A))
-            solvenew = f(new)
-            
-            if abs(new-Old_B) <0.0001:
-                sBeta = Old_A - f(Old_A)*(Old_B - Old_A)/(f(Old_B) - f(Old_A))
-                
-                RBeta.append([sBeta,n])
-                break
-
-            elif n==99:
-                print('failed')
-            else:
-                Old_A=Old_B
-                Old_B=new
-   
-    return RBeta
-
-
-"""
-This is a sub function of function 3
-(2 inputs | 1 output)
----------------------------
-"""
-def M_Beta(g,M):
-    #print("veriables")
-    #print(g)
-    #print(M)
-    f1 = 1+((g-1)/2)*(M**2)+((g+1)/16)*(M**4)
-    f2 = math.sqrt((g+1)*f1)
-    f3 = (((g+1)/4)*(M**2)+f2-1)
-    f4 = math.sqrt((1/(g*(M**2)))*f3)
-    BM = math.asin(f4)
-    #print("Beta Max")
-    #print(BM)
-    return BM
-
-
-"""
-This is a sub function of function 3
-(3 inputs | 1 output)
----------------------------
-"""
-def M_Theta(gamma, Mach, Beta):
-
-    #print("Varribles")
-    #print(gamma)
-    #print(Mach)
-    #print(Beta)
-    
-    g = gamma
-    M = Mach
-    B = Beta
-    
-    top = ((M**2)*(math.sin(B)*math.sin(B))-1)*(1/math.tan(B))
-    bot = (((1/2)*(g+1)*(M**2))-((M**2)*(math.sin(B)*math.sin(B)))+1)
-    
-    TM = math.degrees(1/(math.tan(top/bot)))
-
-    #print("The maximum flow deflection is ")
-    #print(TM)
-    
-    return TM
-
-
-"""
-This is a sub function of function 3
-(1 inputs | 1 output)
----------------------------
-"""
-def Mach_a(Mach):
-    
-    M = Mach
-    
-    mu = math.degrees(math.asin(1/M))
-
-    #print(mu)
-    
-    return mu
-
-
 
 
 
@@ -236,19 +85,22 @@ def TM(g, M, ThetaS):
     # deflection
     delta=theta(g,M,ThetaS) #calling function developed in Project 1
     #M_2
-    M2=mach(g,ThetaS,delta)
-    
+    Mn1=M*math.sin(math.radians(ThetaS))
+    Mn2=((Mn1**2+(2/(g-1)))/((2*g/(g-1)*Mn1**2)-1))**0.5
+    M2=Mn2/(math.sin(math.radians(ThetaS-delta)))
     #Now Grab V' using Mach (Eq 10.16 in book)
     Vp=1/math.sqrt(1+(2/((g-1)*M2**2)))
-    
-
+    #correct so far
     #Now Grab V'_r and V'_theta from geometry (Figure 10.4 in book)
-    Angle=math.radians(ThetaS-delta)
+    A=ThetaS-delta
+    Angle=math.radians(A)
     Vpr=Vp*math.cos(Angle)
-    Vpt=Vp*math.sin(Angle)
+    Vpt=-Vp*math.sin(Angle) 
+    #checked with Kopal's tables, and these values look roughly correct
+    
     
     #Runge-Kutta time, making a subfunction for this
-    [Theta,Vr,Vt]=TM_RK(g,Vpr,Vpt,ThetaS,0.01) #think 0.01 is a reasonable deltaTheta
+    [Theta,Vr,Vt]=TM_RK(g,Vpr,Vpt,ThetaS,-0.01) #think 0.01 is a reasonable deltaTheta
     
     return Theta,Vr,Vt
     
@@ -280,10 +132,11 @@ def TM_RK(g,Vpr,Vpt, ThetaS, dTheta):
     """
     #note that the first equations are solving for Vr and that dr/dtheta=Vtheta
     
-    maxiter=90/dTheta #this is the number of iteratoins to step from 90 degrees (normal shock) to 0, if no solution is found, you're not going to
+    maxiter=ThetaS/-dTheta #this is the number of iteratoins to step from 90 degrees (normal shock) to 0, if no solution is found, you're not going to
     it=0#initialize iteriation couinter
     theta=ThetaS #first angle
     
+    rdt=math.radians(dTheta)#thinking this might be an issue
     #need a few arrays to return
     Tarr=[theta]#array of angles
     Vrarr=[Vpr]#array of radial velocities
@@ -293,20 +146,20 @@ def TM_RK(g,Vpr,Vpt, ThetaS, dTheta):
     #angle starts at thetas and then subtracts dtheta
     
     #loop time
-    while (it<maxiter & Vpt <0.0): #not sure about the Vpt condition, need further testing 
-        #calculate theta
-        theta=theta-dTheta #working backwards
-        Tarr.append(theta)#add ther angle to the array
+    
+    while ((it<maxiter) & (Vpt <0.0)): #not sure about the Vpt condition, need further testing    
+        
+        tstep=theta+(dTheta/2)
         
         #RK k values
-        k11=dTheta*Vpt
-        k12=dTheta*f2(g,theta,Vpr,Vpt)
-        k21=dTheta*(Vpt+(k12/2))
-        k22=dTheta*f2(g,theta+(dTheta/2),Vpr+(k11/2),Vpt+(k12/2))
-        k31=dTheta*(Vpt*(k22/2))
-        k32=dTheta*f2(g,theta+(dTheta/2),Vpr+(k21/2),Vpt+(k22/2))
-        k41=dTheta*(Vpt*(k32/2))
-        k42=dTheta*f2(g,theta+(dTheta/2),Vpr+(k31/2),Vpt+(k32/2))
+        k11=rdt*Vpt
+        k12=rdt*f2(g,theta,Vpr,Vpt)
+        k21=rdt*(Vpt+(k12/2))
+        k22=rdt*f2(g,tstep,Vpr+(k11/2),Vpt+(k12/2))
+        k31=rdt*(Vpt+(k22/2))
+        k32=rdt*f2(g,tstep,Vpr+(k21/2),Vpt+(k22/2))
+        k41=rdt*(Vpt+k32)
+        k42=rdt*f2(g,tstep,Vpr+k31,Vpt+k32)
         
         #find the addition to the velocities
         changeR=(k11+2*k21+2*k31+k41)/6
@@ -314,13 +167,19 @@ def TM_RK(g,Vpr,Vpt, ThetaS, dTheta):
         
         #add the addition
         Vpr=Vpr+changeR
-        Vpt=Vpt+changeT
+        Vpt=Vpt+changeT 
         
         #store in array
         Vrarr.append(Vpr)
         Vtarr.append(Vpt)
         
+        #calculate theta
+        theta=theta+dTheta #working backwards
+        Tarr.append(theta)#add ther angle to the array
+        
+        
         it+=1#count iteration
+    print(it)
     return Tarr,Vrarr,Vtarr 
 
 def f2(g, theta,Vr,Vt):
@@ -348,8 +207,9 @@ def f2(g, theta,Vr,Vt):
     f2=num/denom
     return f2
     
-    
-    
+
+
+
 """
 
 This section is about graphing
