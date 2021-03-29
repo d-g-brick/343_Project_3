@@ -315,8 +315,8 @@ functionMatrix = {
                         The right side are arrays/matrix that hold the varribles (order matters | list = fuction order)
 """
 lst = {
-    "1":["gamma", "Mach", "Shock Angle"],
-    "2":["gamma", "Mach", "Cone Angle"]
+    "1":["gamma", "Mach", "Shock Angle", "dtheta"],
+    "2":["gamma", "Mach", "Cone Angle", "dtheta"]
 }
 
 
@@ -358,18 +358,20 @@ We started with the specific information to each seaction
 Then the common information is done last"""
 
 print("\n --- Inital Contions --- ")
-print("Gamma: ", )
+print("Gamma: ", ver[0])
+print("Mach: ", ver[1])
 if chosen == "1":
-    print("Shock: ", )
+    print("Shock: ", ver[2])
 if chosen == "2":
-    print("Cone Angle: ", )
-print("dtheta: ", )
+    print("Cone Angle: ",ver[2])
+print("dtheta: ", ver[3])
+
 
 print("\n --- Conditions behind shock --- ")
-print("pressure: ", )
-print("temp: ", )
-print("density: ", )
-print("mach: ", )
+print("Pressure: ", )
+print("Temp: ", )
+print("Density: ", )
+print("Mach: ", )
 
 print("\n --- Final Conditions ---")
 print("Shock Angle: ", )
