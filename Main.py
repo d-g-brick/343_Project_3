@@ -304,6 +304,11 @@ chosen = 0
 ver = []
 results = []
 cheese =[]
+Vp = []
+Mach_g = []
+Pg=[]
+Dg =[]
+Tg = []
 
 functionMatrix = {
   "(1) Cone Angle":TM,
@@ -450,10 +455,86 @@ if chosen == "1":
     plt.ylabel('V_Theta')
     
     plt.axis([max(x),min(x),min(y),max(y)])
-      
+    
     # function to show the plot
     fig.savefig("V_ThetaVsTheta.png", bbox_inches="tight", dpi=100)
+     
+    for i in range(0, results[5]+1):
+        
+        Varrrr = math.sqrt(((b[i])**2) + ((c[i])**2))
+        Vp.append(Varrrr)
+        
+    for j in Vp:
+        Store = math.sqrt(2/(((1/(j)**2)-1)*(ver[0]-1)))
+        Mach_g.append(Store)
+        
+    for k in Mach_g:    
+        P=1+(k**2-1)*(2*ver[0]/(ver[0]+1))
+        D=((ver[0]+1)*k**2)/((ver[0]-1)*k**2+2)
+        T=P/D
+        
+        Pg.append(P)
+        Dg.append(D)
+        Tg.append(T)
+        
+    
+    fig = plt.figure()
+    
+    x = results[0]
+    y = Mach_g
+      
+
+    plt.plot(x, y)
+      
+    plt.xlabel('Theta')
+    plt.ylabel('Mach')
+    
+    plt.axis([max(x),min(x),min(y),max(y)])
+      
+    fig.savefig("MachVsTheta.png", bbox_inches="tight", dpi=100)
+    
+    fig = plt.figure()
+    
+    x = results[0]
+    y = Pg
+      
+    plt.plot(x, y)
+      
+    plt.xlabel('Theta')
+    plt.ylabel('Pressure')
+    
+    plt.axis([max(x),min(x),min(y),max(y)])
+      
+    fig.savefig("PressureVsTheta.png", bbox_inches="tight", dpi=100)
 
     
+    fig = plt.figure()
     
+    x = results[0]
+    y = Dg
+     
+    plt.plot(x, y)
+      
+    plt.xlabel('Theta')
+    plt.ylabel('Density')
+    
+    plt.axis([max(x),min(x),min(y),max(y)])
+      
+    fig.savefig("DensityVsTheta.png", bbox_inches="tight", dpi=100)
+    
+    
+    fig = plt.figure()
+    
+    x = results[0]
+    y = Tg
+      
+
+    plt.plot(x, y)
+      
+    plt.xlabel('Theta')
+    plt.ylabel('Temperature')
+    
+    plt.axis([max(x),min(x),min(y),max(y)])
+      
+    fig.savefig("TempVsTheta.png", bbox_inches="tight", dpi=100)
     
