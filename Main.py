@@ -242,7 +242,7 @@ def TM_Shock(g,M,ThetaC):
         q1=f(p1)
         p= p1 - q1*((p1 - p0)/(q1-q0))
         
-        if abs(p-p1)<0.0001:
+        if abs(p-p1)<1e-6:
             
             ThetaS=p
             break
