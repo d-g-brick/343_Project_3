@@ -102,7 +102,7 @@ def TM(g, M, ThetaS, dTheta):
     #Runge-Kutta time, making a subfunction for this
     [Theta,Vr,Vt]=TM_RK(g,Vpr,Vpt,ThetaS,dTheta) #think 0.01 is a reasonable deltaTheta
     
-    return Theta,Vr,Vt
+    return Theta,Vr,Vt,Mn1,M2
     
 
 
@@ -366,12 +366,19 @@ if chosen == "2":
     print("Cone Angle: ",ver[2])
 print("dtheta: ", ver[3])
 
+if chosen == "1":
+    M2 = results[4]
+    Mn1 = results[3]
+    
+Pr=1+(Mn1**2-1)*(2*ver[0]/(ver[0]+1))
+Dr=((ver[0]+1)*ver[0]**2)/((ver[0]-1)*Mn1**2+2)
+Tr=Pr/Dr
 
 print("\n --- Conditions behind shock --- ")
-print("Pressure: ", )
-print("Temp: ", )
-print("Density: ", )
-print("Mach: ", )
+print("Pressure: ", Pr)
+print("Temp: ", Tr)
+print("Density: ", Dr)
+print("Mach: ", M2)
 
 print("\n --- Final Conditions ---")
 print("Shock Angle: ", )
