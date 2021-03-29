@@ -229,7 +229,9 @@ def TM_Shock(g,M,ThetaC):
     """
     #First define the bounds
     p0=ThetaC#has to be bigger than the cone
-    p1=90#can't get 
+    p1=90#can't get past a normal shock, might want to reduce so no strong
+    
+    
     
     
     
