@@ -179,7 +179,6 @@ def TM_RK(g,Vpr,Vpt, ThetaS, dTheta):
         
         
         it+=1#count iteration
-    print(it)
     return Tarr,Vrarr,Vtarr 
 
 def f2(g, theta,Vr,Vt):
@@ -234,7 +233,7 @@ def TM_Shock(g,M,ThetaC):
     
     #define the bounds
     p0=ThetaC#can't be smaller than the cone
-    p1=90#can't get past a normal shock, might want to reduce so no strong
+    p1=70#can't get past a normal shock, might want to reduce so no strong
     
     
     for n in range(1, 100):
